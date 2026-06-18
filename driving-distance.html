@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driving Distance & Time</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .container { max-width: 600px; margin: auto; }
+    label { display: block; margin: 12px 0 4px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin-bottom: 12px; box-sizing: border-box; }
+    button { padding: 12px 18px; font-size: 16px; cursor: pointer; }
+    #result { margin-top: 20px; padding: 16px; background: #f7f7f7; border-radius: 8px; white-space: pre-wrap; }
+    .hint { font-size: 0.95rem; color: #555; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Driving Distance & Time</h1>
+    <p class="hint">Enter two addresses and click the button to get driving distance and estimated travel time.</p>
+
+    <label for="address1">Address 1</label>
+    <input id="address1" type="text" placeholder="e.g. 1600 Amphitheatre Parkway, Mountain View, CA" value="4307 E Tonto Pl, Gilbert, AZ 85298" />
+
+    <label for="address2">Address 2</label>
+    <input id="address2" type="text" placeholder="e.g. 1 Infinite Loop, Cupertino, CA" value="250 E Dunlap Ave, Phoenix, AZ 85020" />
+
+    <button id="calculateButton">Get Driving Distance</button>
+
+    <div id="result" style="display:none;"></div>
+  </div>
+
+  <script defer src="driving-distance.js"></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=BIzaSyApUD1TQRJtKd-CgLdfY1yUTDU8lp7I7nw&callback=initMap&libraries=routes&v=beta"></script>
+</body>
+</html>
