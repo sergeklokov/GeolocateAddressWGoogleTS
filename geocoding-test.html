@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address to GPS Coordinates</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 500px; margin: auto; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        #result { margin-top: 20px; padding: 10px; background: #f4f4f4; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Geocoding App</h2>
+    <input type="text" id="addressInput" value="201 W Jefferson St, Phoenix, AZ 85003"
+         placeholder="Enter an address (e.g., 1600 Amphitheatre Pkwy, Mountain View, CA)">
+    <button onclick="geocodeAddress()">Get GPS Coordinates</button>
+    
+    <div id="result" style="display:none;"></div>
+</div>
+
+<script>
+async function geocodeAddress() {
+    const address = document.getElementById('addressInput').value;
+    const resultDiv = document.getElementById('result');
+    
+    if (!address) {
+        alert("Please enter an address first!");
+        return;
+    }
+
+    // 🔴 REPLACE THIS STRING WITH YOUR NEW GOOGLE API KEY 🔴
+    const apiKey = 'BIzaSyApUD1TQRJtKd-CgLdfY1yUTDU8lp7I7nw'; 
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+    try {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = "Searching...";
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.status === "OK") {
+            const location = data.results[0].geometry.location;
+            const formattedAddress = data.results[0].formatted_address;
+            
+            resultDiv.innerHTML = `
+                <strong>Found Address:</strong> ${formattedAddress}<br><br>
+                <strong>Latitude:</strong> ${location.lat}<br>
+                <strong>Longitude:</strong> ${location.lng}
+            `;
+        } else {
+            resultDiv.innerHTML = `Error: ${data.status} (${data.error_message || 'Check your API restrictions/billing'})`;
+        }
+    } catch (error) {
+        resultDiv.innerHTML = "An error occurred while fetching data.";
+        console.error(error);
+    }
+}
+</script>
+
+</body>
+</html>
